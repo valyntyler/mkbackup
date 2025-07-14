@@ -16,6 +16,9 @@ def main [
   }
 
   let path = $path | path expand
+  let name = $path | path basename
+  let date = date now | format date "%Y%m%d"
   let uid = random chars --length $length
-  ouch compress $path $"($path | path basename)-($uid).bak" --format zip
+
+  ouch compress $path $"($name)-($date)-($uid).bak" --format zip
 }
