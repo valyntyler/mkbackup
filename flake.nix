@@ -18,6 +18,7 @@
           buildInputs = with pkgs; [
             just
             nushell
+            ouch
           ];
         };
       }
