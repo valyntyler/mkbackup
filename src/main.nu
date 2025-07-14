@@ -3,8 +3,12 @@
 def main [
   path: string
   --zip (-z) = true
-  --length (-l) = 6
+  --name (-n) = true
+  --date (-n) = true
+  --uid (-u) = true
+  --uid-length (-l) = 6
 ] {
+  let path = $path | path expand
   if not ($path | path exists) {
     error make {
       msg: "Invalid path"
@@ -15,10 +19,18 @@ def main [
     }
   }
 
-  let path = $path | path expand
-  let name = $path | path basename
-  let date = date now | format date "%Y%m%d"
-  let uid = random chars --length $length
+  let file = [
+    (if $name {$"($path | path basename)"})
+    (if $date {$"(date now | format date "%Y%m%d")"})
+    (if $uid {$"(random chars --length $uid_length)"})
+  ]
+    | filter {$in != null}
+    | str join '-'
+    | $in + ".bak"
 
-  ouch compress $path $"($name)-($date)-($uid).bak" --format zip
+  if $zip {
+    ouch compress ...(glob ($path + "/*")) $file --format zip
+  } else {
+    cp -r $path $file
+  }
 }
