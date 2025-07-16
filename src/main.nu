@@ -5,7 +5,7 @@ def main [
   --zip (-z) = true
   --name (-n) = true
   --date (-n) = true
-  --uid (-u) = false
+  --uid (-u)
   --uid-length (-l) = 6
 ] {
   let path = $path | path expand
