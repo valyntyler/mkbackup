@@ -21,7 +21,7 @@ def main [
 
   let file = [
     (if $name {$"($path | path basename)"})
-    (if $date {$"(date now | format date "%Y%m%d")"})
+    (if $date {$"(date now | format date "%y%m%d%H%M%S")"})
     (if $uid {$"(random chars --length $uid_length)"})
   ]
     | filter {$in != null}
