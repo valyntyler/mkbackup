@@ -3,5 +3,5 @@ run:
     --zip true \
     --name true \
     --date true \
-    --uid true \
+    --uid false \
     --uid-length 6 \
